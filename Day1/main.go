@@ -1,33 +1,38 @@
 package main
 
 import (
-	"bufio"
+	"aoc/utils"
 	"fmt"
-	"os"
 	"sort"
 	"strconv"
+	"strings"
 
-	"golang.org/x/exp/maps"
+	"golang.org/x/exp/slices"
 )
 
 func main() {
-	f, _ := os.Open("input.txt")
+	part1, part2 := Day1("input.txt")
+	fmt.Println("Part 1", part1)
+	fmt.Println("Part 2", part2)
 
-	scan := bufio.NewScanner(f)
-	elfs := make(map[int]int)
-	elfIndex := 0
-	for scan.Scan() {
-		t := scan.Text()
-		if t == "" {
-			elfIndex++
+}
+
+func Day1(inputFile string) (int, int) {
+	elfs := make([]int, 0)
+	for _, str := range utils.ReadAndSplit(inputFile, "\n\n") {
+		total := 0
+		for _, ss := range strings.Split(str, "\n") {
+			i, err := strconv.Atoi(ss)
+			utils.PanicOnErr(err)
+			total += i
 		}
-		nr, _ := strconv.Atoi(t)
-		elfs[elfIndex] += nr
+		elfs = append(elfs, total)
 	}
 
-	vals := maps.Values(elfs)
-	sort.Ints(vals)
+	sort.Ints(elfs)
+	slices.SortFunc(elfs, func(a, b int) bool {
+		return a > b
+	})
 
-	fmt.Println("Part 1", vals[len(vals)-1])
-	fmt.Println("Part 2", vals[len(vals)-1]+vals[len(vals)-2]+vals[len(vals)-3])
+	return utils.SumSlice(elfs[:1]), utils.SumSlice(elfs[:3])
 }
