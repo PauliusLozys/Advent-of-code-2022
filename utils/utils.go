@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bufio"
 	"io"
 	"os"
 	"strings"
@@ -28,4 +29,18 @@ func SumSlice(slice []int) int {
 		total += v
 	}
 	return total
+}
+
+func ReadLineByLine(fileName string, fn func(string) error) error {
+	f, err := os.Open(fileName)
+	if err != nil {
+		return err
+	}
+	scan := bufio.NewScanner(f)
+	for scan.Scan() {
+		if err := fn(scan.Text()); err != nil {
+			return err
+		}
+	}
+	return nil
 }
