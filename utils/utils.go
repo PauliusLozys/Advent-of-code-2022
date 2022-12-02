@@ -2,15 +2,21 @@ package utils
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"os"
 	"strings"
+	"time"
 )
 
 func PanicOnErr(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func MeasureTime(t time.Time) {
+	fmt.Println("Program took:", time.Since(t))
 }
 
 func ReadAndSplit(fileName, splitPattern string) []string {

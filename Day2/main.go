@@ -3,6 +3,7 @@ package main
 import (
 	"aoc/utils"
 	"fmt"
+	"time"
 )
 
 const (
@@ -85,7 +86,6 @@ func Day2(input string) (int, int) {
 		part1, part2     int
 		column1, column2 string
 	)
-
 	err := utils.ReadLineByLine(input, func(line string) error {
 		if _, err := fmt.Sscanf(line, "%s %s", &column1, &column2); err != nil {
 			return err
@@ -101,6 +101,7 @@ func Day2(input string) (int, int) {
 }
 
 func main() {
+	defer utils.MeasureTime(time.Now())
 	part1, part2 := Day2("input.txt")
 	fmt.Println("Part 1:", part1)
 	fmt.Println("Part 2:", part2)

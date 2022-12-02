@@ -6,15 +6,16 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"golang.org/x/exp/slices"
 )
 
 func main() {
+	utils.MeasureTime(time.Now())
 	part1, part2 := Day1("input.txt")
 	fmt.Println("Part 1", part1)
 	fmt.Println("Part 2", part2)
-
 }
 
 func Day1(inputFile string) (int, int) {
