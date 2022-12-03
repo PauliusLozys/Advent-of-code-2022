@@ -37,7 +37,7 @@ func SumSlice(slice []int) int {
 	return total
 }
 
-func ReadLineByLine(fileName string, fn func(string) error) error {
+func ReadLineByLine(fileName string, fn func(line string) error) error {
 	f, err := os.Open(fileName)
 	if err != nil {
 		return err
@@ -46,6 +46,28 @@ func ReadLineByLine(fileName string, fn func(string) error) error {
 	for scan.Scan() {
 		if err := fn(scan.Text()); err != nil {
 			return err
+		}
+	}
+	return nil
+}
+
+func ReadGroupedLines(fileName string, numOfLines int, fn func(lines []string) error) error {
+	f, err := os.Open(fileName)
+	if err != nil {
+		return err
+	}
+	scan := bufio.NewScanner(f)
+	linesScanned := 0
+	buffer := make([]string, numOfLines)
+	for scan.Scan() {
+		buffer[linesScanned] = scan.Text()
+		linesScanned++
+
+		if linesScanned == numOfLines {
+			if err := fn(buffer); err != nil {
+				return err
+			}
+			linesScanned = 0
 		}
 	}
 	return nil
