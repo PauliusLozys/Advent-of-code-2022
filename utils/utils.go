@@ -7,6 +7,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"golang.org/x/exp/constraints"
 )
 
 func PanicOnErr(err error) {
@@ -17,6 +19,19 @@ func PanicOnErr(err error) {
 
 func MeasureTime(t time.Time) {
 	fmt.Println("Program took:", time.Since(t))
+}
+
+func Max[K constraints.Ordered](a, b K) K {
+	if a < b {
+		return b
+	}
+	return a
+}
+func Min[K constraints.Ordered](a, b K) K {
+	if a < b {
+		return a
+	}
+	return b
 }
 
 func ReadAndSplit(fileName, splitPattern string) []string {
