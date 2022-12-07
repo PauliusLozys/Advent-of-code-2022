@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -86,4 +87,10 @@ func ReadGroupedLines(fileName string, numOfLines int, fn func(lines []string) e
 		}
 	}
 	return nil
+}
+
+func MustParseInt(str string) int {
+	v, err := strconv.Atoi(str)
+	PanicOnErr(err)
+	return v
 }
